@@ -85,7 +85,8 @@ public class PlayerController : MonoBehaviour
         {
             //在空中时，慢慢恢复垂直向上
             isGrounded = false;
-            targetUp = Vector2.up;
+            targetUp = Vector2.Lerp(targetUp, Vector2.up, Time.deltaTime * 1.5f);
+            //targetUp = Vector2.up;
         }
 
     }
@@ -96,9 +97,9 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.FromToRotation(Vector2.up, targetUp);
 
         // 增加旋转平滑度。冲刺时可以适当调高 rotationSpeed 
-        float currentRotationSpeed = isDashing ? rotationSpeed * 2f : rotationSpeed;
+        float speed = isGrounded ? rotationSpeed : rotationSpeed * 0.5f;
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * currentRotationSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * speed);
     }
 
     void Jump()
