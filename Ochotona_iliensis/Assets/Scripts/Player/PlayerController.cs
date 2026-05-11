@@ -1,7 +1,16 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("调试信息")]
+    public float currentSpeed;
+
+    [Header("自动移动")]
+    public float baseSpeed = 8f;
+    public float maxSpeed = 8f;
+    public float acceleration = 2f;
+
     [Header("移动参数")]
     public float jumpForce = 10f;
     public float dashSpeed = 20f;
@@ -25,9 +34,24 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<CapsuleCollider2D>();
         originalHeight = col.size.y;
     }
+    private void FixedUpdate()
+    {
+        ApplyForwardForce();
+
+        //当速度＞maxSpeed->尝试将其拉回
+        //当!isDashing->减速
+        if (!isDashing && rb.velocity.magnitude > maxSpeed)
+        {
+            //使用Lerp来实现平滑减速
+            //10f是减速强度，数值越大，回落越快
+            rb.velocity = Vector2.Lerp(rb.velocity, rb.velocity.normalized * maxSpeed, Time.fixedDeltaTime * 10f);
+        }
+    }
 
     void Update()
     {
+        currentSpeed = rb.velocity.magnitude;
+
         CheckGround();
         HandleInput();
         AlignToGround();
@@ -122,14 +146,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator Dash()
+    IEnumerator Dash()
     {
-        float startTime = Time.time;
-        while (Time.time < startTime + dashDuration)
+        if (isDashing) yield break;
+
+        isDashing = true;
+
+        //不清除速度，而是直接设定一个很高的目标冲刺速度
+        rb.velocity = transform.right * dashSpeed;
+
+        yield return new WaitForSeconds(dashDuration);
+
+        isDashing = false;
+    }
+
+    void ApplyForwardForce()
+    {
+        if (isDashing) return;
+
+        float currentForwardSpeed = Vector2.Dot(rb.velocity, transform.right);
+
+        if (currentForwardSpeed < baseSpeed)
         {
-            //向对应坡面的切线方向冲刺
-            rb.velocity = transform.right * dashSpeed;
-            yield return null;
+            rb.AddForce(transform.right * acceleration, ForceMode2D.Force);
         }
     }
 }
