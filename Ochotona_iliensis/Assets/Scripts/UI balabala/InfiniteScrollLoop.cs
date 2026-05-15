@@ -11,7 +11,7 @@ public class InfiniteScrollLoop : MonoBehaviour
     void Start()
     {
         cards = layout.GetCards();
-        // 计算单个项占用的总宽度（卡片宽 + 间隔）
+        //计算单个项占用的总宽度（卡片宽 + 间隔）
         itemWidthWithSpacing = layout.spacing;
     }
 

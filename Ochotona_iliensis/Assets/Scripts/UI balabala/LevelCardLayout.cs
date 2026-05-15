@@ -28,16 +28,13 @@ public class LevelCardLayout : MonoBehaviour
 
     void ArrangeCards()
     {
-        int centerIndex =
-            cards.Count / 2;
+        int centerIndex = cards.Count / 2;
 
         for (int i = 0; i < cards.Count; i++)
         {
-            float x =
-                (i - centerIndex) * spacing;
+            float x = (i - centerIndex) * spacing;
 
-            cards[i].anchoredPosition =
-                new Vector2(x, 0);
+            cards[i].anchoredPosition = new Vector2(x, 0);
         }
     }
 

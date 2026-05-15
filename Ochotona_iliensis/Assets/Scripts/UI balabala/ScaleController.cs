@@ -29,34 +29,20 @@ public class ScaleController : MonoBehaviour
 
     void UpdateScale()
     {
-        float centerX =
-            viewport.position.x;
+        float centerX = viewport.position.x;
 
         foreach (RectTransform card in cards)
         {
-            float distance =
-                Mathf.Abs(
-                    card.position.x -
-                    centerX
-                );
+            float distance = Mathf.Abs(card.position.x - centerX);
 
-            float t =
-                Mathf.Clamp01(
-                    distance / maxDistance
-                );
+            float t = Mathf.Clamp01(distance / maxDistance);
 
-            float curve =
-                scaleCurve.Evaluate(1 - t);
+            float curve = scaleCurve.Evaluate(1 - t);
 
             float scale =
-                Mathf.Lerp(
-                    minScale,
-                    maxScale,
-                    curve
-                );
+                Mathf.Lerp(minScale, maxScale, curve);
 
-            card.localScale =
-                Vector3.one * scale;
+            card.localScale = Vector3.one * scale;
         }
     }
 }
