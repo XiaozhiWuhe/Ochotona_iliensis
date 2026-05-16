@@ -12,7 +12,6 @@ public class LevelCardLayout : MonoBehaviour
     void Start()
     {
         InitCards();
-
         ArrangeCards();
     }
 
@@ -42,4 +41,5 @@ public class LevelCardLayout : MonoBehaviour
     {
         return cards;
     }
+
 }

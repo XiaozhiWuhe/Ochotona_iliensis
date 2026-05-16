@@ -13,5 +13,5 @@ public class LevelData : ScriptableObject
     public float gravityScale;
 
     [Header("关卡预制件")]
-    public GameObject mapPrefab; //存有 Sprite Shape 坡道的预制体
+    public GameObject mapPrefab; //存有Sprite Shape坡道的预制体
 }
