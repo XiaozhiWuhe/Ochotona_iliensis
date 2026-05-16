@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -35,16 +36,28 @@ public class LevelManager : MonoBehaviour
     public void OnLevelComplete()
     {
         Debug.Log("恭喜通关！");
-        //这里可以执行以下操作：
-        //停止玩家移动
+
+        //停止玩家移动和物理模拟
         player.enabled = false;
-        //弹出过关 UI（我们稍后可以做这个）
-        //延时 2 秒后加载下一关（或者回到主菜单）
-        Invoke("LoadNextLevel", 2f);
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Static; //让玩家定格在终点，不再受重力影响
+        }
+
+        //延时执行ReturnToMainMenu
+        Invoke("ReturnToMainMenu", 2f);
     }
 
     void LoadNextLevel()
     {
         Debug.Log("准备加载下一关...");
+    }
+
+    void ReturnToMainMenu()
+    {
+        Debug.Log("正在返回选关界面...");
+        SceneManager.LoadScene("MainMenu");
     }
 }
