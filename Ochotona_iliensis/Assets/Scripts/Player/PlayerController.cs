@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float dashDuration = 0.2f;
     public float rotationSpeed = 10f;//旋转平滑速度
     private float originalHeight;//初始碰撞箱高度
+    private float dashCooldown = 1f; //冲刺冷却时间
+    private bool canDash = true; //是否可以冲刺
 
     [Header("地面检测")]
     public float groundCheckDistance = 0.1f; //向下检测距离
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //冲刺d
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && canDash && !isDashing)
         {
             StartCoroutine(Dash());
         }
@@ -148,16 +150,31 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Dash()
     {
-        if (isDashing) yield break;
-
         isDashing = true;
+        canDash = false;
+
+        //闪避无敌帧
+        PlayerHealth health = GetComponent<PlayerHealth>();
+        if (health != null)
+        {
+            health.SetInvincible(true);
+        }
 
         //不清除速度，而是直接设定一个很高的目标冲刺速度
         rb.velocity = transform.right * dashSpeed;
 
         yield return new WaitForSeconds(dashDuration);
 
+        if (health != null)
+        {
+            health.SetInvincible(false);
+        }
+
         isDashing = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+        Debug.Log("闪避可释放状态！");
     }
 
     void ApplyForwardForce()
