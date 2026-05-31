@@ -6,6 +6,7 @@ public class LevelData : ScriptableObject
     public int levelID;
     public string levelName;
     public LevelData nextLevel;
+    public bool isFlightLevel;
 
     [Header("ŒÔ¿Ì≈‰÷√")]
     public float baseSpeed;
