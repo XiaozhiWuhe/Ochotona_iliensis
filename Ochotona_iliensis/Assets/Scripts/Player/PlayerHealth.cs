@@ -11,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
     public float invincibleDuration = 1f;   // 受伤后无敌秒数
     private bool isInvincible = false;
 
+    //生成物相关
+    private bool hasShield = false;   // 是否拥有护盾
+
     private PlayerController playerController;
     private Rigidbody2D rb;
 
@@ -21,8 +24,23 @@ public class PlayerHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    //生成物相关
+    public void AddShield()
+    {
+        hasShield = true;
+        Debug.Log("获得护盾！");
+    }
+
     public void TakeDamage(int damage)
     {
+        // 护盾优先：优先消耗护盾
+        if (hasShield)
+        {
+            hasShield = false;
+            Debug.Log("护盾抵消伤害，护盾消失");
+            return;
+        }
+
         if (isInvincible || currentHealth <= 0) return;
 
         currentHealth -= damage;
