@@ -19,4 +19,4 @@ MonoBehaviour:
   baseSpeed: 8
   maxSpeed: 8
   gravityScale: 0
-  mapPrefab: {fileID: 5503974332078228428, guid: 47e407432fc59b445a41a1e54a0a10c5, type: 3}
+  mapPrefab: {fileID: 3192006618366982909, guid: 47a1307e8bdc9434a85639e4c0440fdb, type: 3}

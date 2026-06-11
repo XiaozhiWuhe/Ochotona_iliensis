@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class GroundEnemy : MonoBehaviour
 {
-    public float speed = 2f;          // 向左移动速度（比飞行慢）
-    public int damage = 1;
+    public float speed = 2f;          // 向左移动速度
+    public int damage = 1;            // 碰撞伤害
 
-    void Update()
+    private Rigidbody2D rb;
+
+    void Start()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
-        if (transform.position.x < -15f)
+        rb = GetComponent<Rigidbody2D>();
+        // 确保刚体是 Dynamic，重力正常
+        if (rb == null)
         {
-            Destroy(gameObject);
+            rb = gameObject.AddComponent<Rigidbody2D>();
         }
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 1f;          // 受重力影响，会自然落在地面上
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // 防止倒下
+    }
+
+    void FixedUpdate()
+    {
+        // 每帧给向左的速度，y 方向保持当前速度（重力会处理垂直方向）
+        rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,5 +38,11 @@ public class GroundEnemy : MonoBehaviour
                 playerHealth.TakeDamage(damage);
             }
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        // 离开屏幕时销毁（避免无限累积）
+        Destroy(gameObject);
     }
 }

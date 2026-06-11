@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 0
   levelName: 
+  nextLevel: {fileID: 0}
+  isFlightLevel: 0
   baseSpeed: 0
   maxSpeed: 0
   gravityScale: 0
   mapPrefab: {fileID: 0}
-  targetDistance: 0
