@@ -716,6 +716,9 @@ MonoBehaviour:
   visualModel: {fileID: 1025752902}
   maxLeanAngle: 15
   leanSmoothing: 10
+  shadowColor: {r: 0.6373714, g: 0.9685534, b: 0.027411724, a: 0.6}
+  shadowDuration: 0.3
+  shadowInterval: 0.04
   currentSpeed: 0
   baseSpeed: 8
   maxSpeed: 8

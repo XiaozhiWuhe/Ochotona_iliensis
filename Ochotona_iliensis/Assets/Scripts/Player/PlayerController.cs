@@ -4,10 +4,16 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     [Header("外观与动感表现")]
-    public Transform visualModel;           //拖入专门放图片/动画的子物体，避免物理碰撞体跟着倾斜
-    public float maxLeanAngle = 15f;        //最大倾斜角度（度数，比如15度）
-    public float leanSmoothing = 10f;       //倾斜变化的平滑速度
-    private float currentLeanAngle;         //当前的倾斜角缓存
+    public Transform visualModel;           // 拖入专门放图片/动画的子物体，避免物理碰撞体跟着倾斜
+    public float maxLeanAngle = 15f;        // 最大倾斜角度/度数
+    public float leanSmoothing = 10f;       // 倾斜变化的平滑速度
+    private float currentLeanAngle;         // 当前的倾斜角缓存
+
+    [Header("冲刺残影效果")]
+    public Color shadowColor = new Color(0f, 0.6f, 1f, 0.6f); // 残影颜色
+    public float shadowDuration = 0.3f;     // 单个残影存在的时间
+    public float shadowInterval = 0.04f;     // 生成残影的时间间隔
+    private SpriteRenderer playerSR;        // 主角的 SpriteRenderer 引用
 
     [Header("调试信息")]
     public float currentSpeed;
@@ -62,6 +68,12 @@ public class PlayerController : MonoBehaviour
         if (visualModel == null && transform.childCount > 0)
         {
             visualModel = transform.GetChild(0);
+        }
+
+        // 自动获取子物体上的SpriteRenderer渲染器
+        if (visualModel != null)
+        {
+            playerSR = visualModel.GetComponent<SpriteRenderer>();
         }
     }
 
@@ -270,7 +282,13 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = transform.right * dashSpeed;
 
+        // 开启生成残影的副协程
+        Coroutine shadowCoroutine = StartCoroutine(GenerateDashShadows());
+
         yield return new WaitForSeconds(dashDuration);
+
+        // 冲刺结束：停止生成残影
+        if (shadowCoroutine != null) StopCoroutine(shadowCoroutine);
 
         if (health != null)
         {
@@ -282,6 +300,35 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
         Debug.Log("闪避可释放状态！");
+    }
+
+    // 在冲刺期间以高频率“盖章”生成残影
+    IEnumerator GenerateDashShadows()
+    {
+        while (isDashing)
+        {
+            if (playerSR != null && playerSR.sprite != null)
+            {
+                // 创建一个空物体作为残影载体
+                GameObject shadowObj = new GameObject("DashShadow_Generated");
+                DashShadow shadow = shadowObj.AddComponent<DashShadow>();
+
+                // 传入这一帧子物体的属性，同时新增传入：主角当前的 Sorting Layer ID 和 Sorting Order
+                shadow.Init(
+                    playerSR.sprite,
+                    visualModel.position,
+                    visualModel.rotation,
+                    visualModel.lossyScale,
+                    shadowColor,
+                    shadowDuration,
+                    playerSR.sortingLayerID,   // 新增
+                    playerSR.sortingOrder      // 新增
+                );
+            }
+
+            // 等待间隔，进行下一次生成
+            yield return new WaitForSeconds(shadowInterval);
+        }
     }
 
     void ApplyForwardForce()
