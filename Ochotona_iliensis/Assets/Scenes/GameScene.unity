@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 940979088}
   - component: {fileID: 940979090}
   - component: {fileID: 940979091}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -813,7 +813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1025752902}
   - component: {fileID: 1025752903}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteRender
   m_TagString: Player
   m_Icon: {fileID: 0}

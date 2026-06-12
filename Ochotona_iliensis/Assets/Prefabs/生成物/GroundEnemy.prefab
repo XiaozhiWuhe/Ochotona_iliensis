@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6879726370307021136}
   - component: {fileID: 5650042618930529408}
   - component: {fileID: 3590000611294966522}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: GroundEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   damage: 1
-  groundRayLength: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
