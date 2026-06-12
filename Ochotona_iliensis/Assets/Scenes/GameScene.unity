@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 940979088}
   - component: {fileID: 940979090}
   - component: {fileID: 940979091}
+  - component: {fileID: 940979092}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -803,6 +804,27 @@ MonoBehaviour:
   dashSpeed: 20
   dashDuration: 0.2
   dashCooldown: 1
+--- !u!114 &940979092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940979083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0641112a36b44b842b85ada97041eca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEnergy: 100
+  currentEnergy: 0
+  energyGainPerSecond: 10
+  energyCost: 100
+  energyRefundPerKill: 15
+  killRadius: 4
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1025752901
 GameObject:
   m_ObjectHideFlags: 0

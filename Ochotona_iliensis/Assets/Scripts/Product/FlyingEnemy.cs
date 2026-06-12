@@ -9,10 +9,8 @@ public class FlyingEnemy : MonoBehaviour
 
     void Update()
     {
-        // 向左移动
         transform.Translate(Vector2.left * speed * Time.deltaTime);
 
-        // 超出屏幕左边（x < -15）就销毁，节省性能
         if (transform.position.x < -15f)
         {
             Destroy(gameObject);
@@ -29,5 +27,12 @@ public class FlyingEnemy : MonoBehaviour
                 playerHealth.TakeDamage(damage);
             }
         }
+    }
+
+    // s响应玩家大招的瞬间死亡接口
+    public void InstantKill()
+    {
+        // 可以在这里实例化一个爆炸特效，或者播放受击音效
+        Destroy(gameObject);
     }
 }

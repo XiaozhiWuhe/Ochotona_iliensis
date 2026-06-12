@@ -12,19 +12,17 @@ public class GroundEnemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // 确保刚体是 Dynamic，重力正常
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = 1f;          // 受重力影响，会自然落在地面上
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // 防止倒下
+        rb.gravityScale = 1f;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void FixedUpdate()
     {
-        // 每帧给向左的速度，y 方向保持当前速度（重力会处理垂直方向）
         rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
 
@@ -42,7 +40,12 @@ public class GroundEnemy : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        // 离开屏幕时销毁（避免无限累积）
+        Destroy(gameObject);
+    }
+
+    // 响应玩家大招的瞬间死亡接口
+    public void InstantKill()
+    {
         Destroy(gameObject);
     }
 }

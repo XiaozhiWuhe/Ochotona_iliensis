@@ -6,7 +6,7 @@ public class TrackingEnemy : MonoBehaviour
 {
     public float speed = 2.5f;
     public int damage = 1;
-    public float destroyX = -15f;   // 超出此X坐标销毁
+    public float destroyX = -15f;
 
     private Transform player;
     private bool isAlive = true;
@@ -35,7 +35,6 @@ public class TrackingEnemy : MonoBehaviour
             transform.Translate(direction * speed * Time.deltaTime);
         }
 
-        // 超出左边销毁
         if (transform.position.x < destroyX)
             Destroy(gameObject);
     }
@@ -49,16 +48,19 @@ public class TrackingEnemy : MonoBehaviour
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
                 playerHealth.TakeDamage(damage);
-            // 不销毁自身，只扣血
         }
     }
 
-    // 供共鸣技能调用，消灭敌人
     public void DieByResonance()
+    {
+        InstantKill(); // 让原本的共鸣接口也走统一的销毁逻辑
+    }
+
+    // 响应玩家大招的瞬间死亡接口
+    public void InstantKill()
     {
         if (!isAlive) return;
         isAlive = false;
-        // 可在此添加音效
         Destroy(gameObject);
     }
-}   
+}
