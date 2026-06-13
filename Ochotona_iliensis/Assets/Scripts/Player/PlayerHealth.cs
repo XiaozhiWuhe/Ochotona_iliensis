@@ -31,9 +31,10 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("获得护盾！");
     }
 
+    //普通伤害接口（会被冲刺、闪避、受伤无敌帧免疫）
     public void TakeDamage(int damage)
     {
-        // 护盾优先：优先消耗护盾
+        // 1. 护盾优先：优先消耗护盾
         if (hasShield)
         {
             hasShield = false;
@@ -41,10 +42,37 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        // 2. 检查普通无敌状态
         if (isInvincible || currentHealth <= 0) return;
 
+        // 3. 执行扣血
+        ApplyCoreDamage(damage);
+    }
+
+    //真实伤害/环境强制伤害接口
+    //无视任何无敌帧（包括闪避），直接扣血！但保留护盾的抵消机制。
+    public void TakeTrueDamage(int damage)
+    {
+        if (currentHealth <= 0) return;
+
+        // 这样的话如果有护盾，也可以让护盾先顶一刀
+        if (hasShield)
+        {
+            hasShield = false;
+            Debug.Log("环境危机伤害被护盾抵消！");
+            return;
+        }
+
+        // 绕过isInvincible判定，直接执行核心扣血
+        Debug.Log("遭受环境真实伤害（无视无敌状态）！");
+        ApplyCoreDamage(damage);
+    }
+
+    //内部核心扣血与状态触发逻辑（私有函数，避免代码冗余）
+    private void ApplyCoreDamage(int damage)
+    {
         currentHealth -= damage;
-        Debug.Log($"玩家受伤！当前血量: {currentHealth}");
+        Debug.Log($"玩家实际扣血！当前血量: {currentHealth}");
 
         if (currentHealth <= 0)
         {
@@ -52,6 +80,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
+            // 无论是受什么伤，受伤后都给予一段常规无敌时间，防止连续暴毙
             StartCoroutine(BecomeInvincible());
         }
     }
@@ -71,11 +100,11 @@ public class PlayerHealth : MonoBehaviour
 
         if (status)
         {
-            Debug.Log("闪避");
+            Debug.Log("闪避/冲刺中：开启无敌状态");
         }
         else
         {
-            Debug.Log("结束闪避");
+            Debug.Log("结束闪避/冲刺：解除无敌状态");
         }
     }
 

@@ -13,8 +13,12 @@ public class PlayerAbility : MonoBehaviour
     public float killRadius = 4f;           // 消灭敌人的半径范围
     public LayerMask enemyLayer;            // 敌人的物理图层
 
+    private bool isSilenced = false; // 是否被沉默
+
     void Update()
     {
+        if (isSilenced) return;
+
         // 匀速自然积攒能量
         if (currentEnergy < maxEnergy)
         {
@@ -103,10 +107,24 @@ public class PlayerAbility : MonoBehaviour
         }
     }
 
-    // 在 Scene 窗口画一个红色的圈，方便策划直观调整和预览技能范围
+    // 在Scene窗口画一个红色的圈，方便策划直观调整和预览技能范围
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, killRadius);
+    }
+
+    //提供给危机区域调用的公共方法
+    public void SetSilence(bool silenceState)
+    {
+        isSilenced = silenceState;
+        if (silenceState)
+        {
+            Debug.Log("玩家技能已被禁用！");
+        }
+        else
+        {
+            Debug.Log("玩家技能恢复正常！");
+        }
     }
 }
