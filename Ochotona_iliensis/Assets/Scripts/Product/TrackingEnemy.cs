@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TrackingEnemy : MonoBehaviour
 {
-    public float speed = 2.5f;
+    [Header("移动速度（由生成器设置）")]
+    public float chaseSpeed = 3f;      // 追踪速度标量（会覆盖默认值）
+
+    [Header("伤害与销毁")]
     public int damage = 1;
-    public float destroyX = -15f;
+    public float destroyX = -15f;      // 超出左边销毁
+    public float destroyY = 20f;       // 超出上下边界销毁
 
     private Transform player;
     private bool isAlive = true;
@@ -28,36 +32,32 @@ public class TrackingEnemy : MonoBehaviour
     void Update()
     {
         if (!isAlive) return;
+        if (player == null) return;
 
-        if (player != null)
+        // 边界销毁
+        if (transform.position.x < destroyX || Mathf.Abs(transform.position.y) > destroyY)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
-            transform.Translate(direction * speed * Time.deltaTime);
+            Destroy(gameObject);
+            return;
         }
 
-        if (transform.position.x < destroyX)
-            Destroy(gameObject);
+        // 直线追踪：向玩家位置移动
+        float step = chaseSpeed * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, player.position, step);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (!isAlive) return;
-
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-                playerHealth.TakeDamage(damage);
+            PlayerHealth ph = other.GetComponent<PlayerHealth>();
+            if (ph != null) ph.TakeDamage(damage);
+            // 碰撞后不消失，继续追踪（共鸣才消灭）
         }
     }
 
-    public void DieByResonance()
-    {
-        InstantKill(); // 让原本的共鸣接口也走统一的销毁逻辑
-    }
-
-    // 响应玩家大招的瞬间死亡接口
-    public void InstantKill()
+    public void InstantKill()   // 共鸣调用
     {
         if (!isAlive) return;
         isAlive = false;

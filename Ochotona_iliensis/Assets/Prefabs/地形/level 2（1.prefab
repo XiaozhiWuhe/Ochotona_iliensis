@@ -982,6 +982,7 @@ Transform:
   - {fileID: 7870432097636320658}
   - {fileID: 3687510657878612379}
   - {fileID: 6325757576839106058}
+  - {fileID: 5982445087543551926}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4756756814305215874
@@ -2008,6 +2009,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6546886304371615919, guid: 12376e4dc91e5174680b3c22fca4d8e3, type: 3}
   m_PrefabInstance: {fileID: 4026871327309868349}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5251867360435065662
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7421807344705530037}
+    m_Modifications:
+    - target: {fileID: 1184765285346092607, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_Name
+      value: TrackingEnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873579994767087482, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: speedWhenAhead
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873579994767087482, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: speedWhenBehind
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.067627
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.895121
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.40553036
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+--- !u!4 &5982445087543551926 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2010729233686672520, guid: 5bf6f66d373a88f469b5ce6902555a68, type: 3}
+  m_PrefabInstance: {fileID: 5251867360435065662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7635744384614592820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2016,10 +2087,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7421807344705530037}
     m_Modifications:
-    - target: {fileID: 1316999817486147290, guid: 7cad297fddb34824e9945c723a221db1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3743425593983189467, guid: 7cad297fddb34824e9945c723a221db1, type: 3}
       propertyPath: m_Name
       value: FlyingEnemy 1
@@ -2094,9 +2161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54bc051b15cf954db5ede6d652b713a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2.5
+  chaseSpeed: 3
   damage: 1
   destroyX: -15
+  destroyY: 20
 --- !u!1001 &8122699305309545024
 PrefabInstance:
   m_ObjectHideFlags: 0
