@@ -49,5 +49,5 @@ MonoBehaviour:
   maxSpawnInterval: 4
   minRadius: 3
   maxRadius: 6
-  speedWhenBehind: 7
+  speedWhenBehind: 8.5
   speedWhenAhead: 3.5

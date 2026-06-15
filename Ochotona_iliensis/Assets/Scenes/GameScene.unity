@@ -721,9 +721,9 @@ MonoBehaviour:
   shadowDuration: 0.3
   shadowInterval: 0.04
   currentSpeed: 0
-  baseSpeed: 8
-  maxSpeed: 8
-  acceleration: 10
+  baseSpeed: 10
+  maxSpeed: 10
+  acceleration: 20
   jumpForce: 10
   dashSpeed: 20
   dashDuration: 0.2
