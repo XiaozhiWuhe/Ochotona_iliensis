@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
+        UpdateUI();
     }
 
     //生成物相关
@@ -47,6 +48,8 @@ public class PlayerHealth : MonoBehaviour
 
         // 3. 执行扣血
         ApplyCoreDamage(damage);
+
+        UpdateUI();
     }
 
     //真实伤害/环境强制伤害接口
@@ -105,6 +108,16 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             Debug.Log("结束闪避/冲刺：解除无敌状态");
+        }
+    }
+
+    //专门通知 UI 的私有辅助方法
+    void UpdateUI()
+    {
+        PlayerHealthUI ui = FindObjectOfType<PlayerHealthUI>();
+        if (ui != null)
+        {
+            ui.UpdateHealthUI(currentHealth);
         }
     }
 

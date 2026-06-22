@@ -17,7 +17,7 @@ public class AnyKeyStart : MonoBehaviour
         if (isStarting) return;
 
         //改为精确检测键盘空格键按下
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             TriggerStartGame();
         }

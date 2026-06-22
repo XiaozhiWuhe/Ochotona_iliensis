@@ -1,14 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI; //如果用 TextMeshPro，改成 using TMPro;
+using TMPro;
 
 public class BlinkingText : MonoBehaviour
 {
-    private Text textComponent; //如果用 TMP，改成 TextMeshProUGUI
-    public float blinkSpeed = 2f; // 闪烁速度
+    private TextMeshProUGUI textComponent;
+    public float blinkSpeed = 2f; //闪烁速度
 
     void Start()
     {
-        textComponent = GetComponent<Text>();
+        textComponent = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
