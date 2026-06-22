@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b868ec7e4059ac540a443c198f49212f, type: 3}
   m_Name: Level_02
   m_EditorClassIdentifier: 
-  levelID: 0
+  levelID: 2
   levelName: 
   nextLevel: {fileID: 0}
   isFlightLevel: 0

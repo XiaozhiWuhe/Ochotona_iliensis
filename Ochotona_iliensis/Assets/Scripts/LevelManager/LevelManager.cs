@@ -13,8 +13,11 @@ public class LevelManager : MonoBehaviour
     public CinemachineVirtualCamera flightCamera;
 
     [Header("UI管理器引用")]
-    public GameUIManager uiManager; // 拖入场景里的 UI 脚本
-    private LevelData loadedLevelData; // 内部记录当前成功生成的关卡数据
+    public GameUIManager uiManager; //场景里的 UI 脚本
+    private LevelData loadedLevelData; //内部记录当前成功生成的关卡数据
+
+    [Header("新手引导 UI")]
+    public GameObject tutorialPanelPrefab;
     void Start()
     {
         //如果静态变量里有值，加载它；否则加载默认关卡
@@ -108,6 +111,20 @@ public class LevelManager : MonoBehaviour
             if (flightCamera != null) flightCamera.gameObject.SetActive(false);
 
             Debug.Log($"【模式切换】已激活《{data.levelName}》的滑行模式");
+        }
+
+        if (tutorialPanelPrefab != null)
+        {
+            // 判断是否为第一关（假设你的第一关 levelID 设为了 1，或者判断 data.levelName == "第一关"）
+            if (data.levelID == 1)
+            {
+                tutorialPanelPrefab.SetActive(true); // 唤醒引导弹窗（它会在内部自己暂停游戏 Time.timeScale = 0）
+                Debug.Log("【新手引导】检测到当前为第一关，弹窗已拦截游戏。");
+            }
+            else
+            {
+                tutorialPanelPrefab.SetActive(false); // 其他关卡确保它是关闭的
+            }
         }
     }
 

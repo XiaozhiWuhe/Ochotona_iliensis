@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b868ec7e4059ac540a443c198f49212f, type: 3}
   m_Name: Level_03
   m_EditorClassIdentifier: 
-  levelID: 0
+  levelID: 3
   levelName: 
+  nextLevel: {fileID: 0}
+  isFlightLevel: 0
   baseSpeed: 0
   maxSpeed: 0
   gravityScale: 0
   mapPrefab: {fileID: 0}
-  targetDistance: 0
