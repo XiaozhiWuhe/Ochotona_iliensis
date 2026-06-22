@@ -113,12 +113,21 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("玩家死亡！");
 
-        //瘫痪控制器
+        //瘫痪控制器的输入和移动逻辑
         if (playerController != null) playerController.enabled = false;
 
-        //死亡静止
+        //让物理静止，防止死后继续滑行
         if (rb != null) rb.velocity = Vector2.zero;
 
-        //后面在这里补充死亡UI，或LevelManager重新加载关卡
+        //找到LevelManager并通知关卡失败
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager != null)
+        {
+            levelManager.OnLevelFailed(); //触发LevelManager里的失败结算逻辑
+        }
+        else
+        {
+            Debug.LogError("场景中未找到 LevelManager！无法弹出失败界面。");
+        }
     }
 }

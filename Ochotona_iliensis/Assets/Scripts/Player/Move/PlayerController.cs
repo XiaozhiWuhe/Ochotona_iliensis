@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public float dashDuration = 0.2f;
     public float rotationSpeed = 10f;//旋转平滑速度
     private float originalHeight;//初始碰撞箱高度
-    private float dashCooldown = 1f; //冲刺冷却时间
+    private float dashCooldown = 5f; //冲刺冷却时间
     private bool canDash = true; //是否可以冲刺
 
     [Header("地面检测")]
