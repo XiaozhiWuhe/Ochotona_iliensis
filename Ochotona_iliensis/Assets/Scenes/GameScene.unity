@@ -1683,8 +1683,8 @@ MonoBehaviour:
   shadowDuration: 0.3
   shadowInterval: 0.04
   currentSpeed: 0
-  baseSpeed: 10
-  maxSpeed: 10
+  baseSpeed: 9
+  maxSpeed: 9
   acceleration: 20
   jumpForce: 10
   dashSpeed: 20
@@ -1747,7 +1747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   currentHealth: 0
-  invincibleDuration: 1
+  invincibleDuration: 5
 --- !u!114 &940979091
 MonoBehaviour:
   m_ObjectHideFlags: 0
