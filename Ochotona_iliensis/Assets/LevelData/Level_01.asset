@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 1
   levelName: 01
-  nextLevel: {fileID: 0}
+  nextLevel: {fileID: 11400000, guid: ef9eee733bf8d974bb08a5eb6a8f587c, type: 2}
   isFlightLevel: 0
   baseSpeed: 8
   maxSpeed: 8

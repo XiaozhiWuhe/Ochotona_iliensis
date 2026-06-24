@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Level_03
   m_EditorClassIdentifier: 
   levelID: 3
-  levelName: 
+  levelName: 03
   nextLevel: {fileID: 0}
   isFlightLevel: 0
-  baseSpeed: 0
-  maxSpeed: 0
+  baseSpeed: 8
+  maxSpeed: 8
   gravityScale: 0
-  mapPrefab: {fileID: 0}
+  mapPrefab: {fileID: 3192006618366982909, guid: da712122ec7fd6743a092df9738f16fe, type: 3}
