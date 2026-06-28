@@ -50,4 +50,4 @@ MonoBehaviour:
   minRadius: 3
   maxRadius: 6
   speedWhenBehind: 8.5
-  speedWhenAhead: 3.5
+  speedWhenAhead: 4.5

@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class GroundEnemy : MonoBehaviour
 {
-    public float speed = 2f;          // 向左移动速度
-    public int damage = 1;            // 碰撞伤害
-    public float activationDistance = 8f;
+    public float speed = 2f;
+    public int damage = 1;
+    public float screenOffset = 2f;
 
     private bool isActivated = false;
-    private Transform player;
     private bool isDead = false;
     private Rigidbody2D rb;
+    private Camera mainCamera;
 
     void Start()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
+        mainCamera = Camera.main;
 
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            rb = gameObject.AddComponent<Rigidbody2D>();
-        }
+        if (rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 1f;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -30,11 +26,12 @@ public class GroundEnemy : MonoBehaviour
 
     void Update()
     {
-        // 距离激活判定
+        // 屏幕边缘激活判定
         if (!isActivated)
         {
-            if (player == null) return;
-            if (transform.position.x - player.position.x < activationDistance)
+            if (mainCamera == null) return;
+            float rightEdge = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+            if (transform.position.x < rightEdge + screenOffset)
             {
                 isActivated = true;
             }
@@ -51,14 +48,14 @@ public class GroundEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 只在激活后施加物理速度
         if (isActivated)
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    
+private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {

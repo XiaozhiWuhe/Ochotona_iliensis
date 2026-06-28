@@ -5,21 +5,25 @@ using UnityEngine;
 public class TrackingEnemySpawner : MonoBehaviour
 {
     public GameObject trackingEnemyPrefab;
+
+    [Header("生成间隔")]
     public float minSpawnInterval = 5f;
     public float maxSpawnInterval = 10f;
+
+    [Header("生成位置（相对于玩家）")]
     public float minRadius = 3f;
     public float maxRadius = 6f;
 
     [Header("敌人速度设置")]
-    public float speedWhenBehind = 5f;   // 敌人在玩家后方（X < 玩家X）
-    public float speedWhenAhead = 2.5f;  // 敌人在玩家前方（X > 玩家X）
+    public float speedWhenBehind = 5f;
+    public float speedWhenAhead = 2.5f;
 
     private Transform player;
 
     void Start()
     {
         FindPlayer();
-        ScheduleSpawn();
+        StartCoroutine(SpawnLoop());
     }
 
     void FindPlayer()
@@ -28,19 +32,19 @@ public class TrackingEnemySpawner : MonoBehaviour
         if (playerObj != null) player = playerObj.transform;
     }
 
-    void ScheduleSpawn()
+    System.Collections.IEnumerator SpawnLoop()
     {
-        float interval = Random.Range(minSpawnInterval, maxSpawnInterval);
-        Invoke(nameof(SpawnEnemy), interval);
+        while (true)
+        {
+            float interval = Random.Range(minSpawnInterval, maxSpawnInterval);
+            yield return new WaitForSeconds(interval);
+            SpawnEnemy();
+        }
     }
 
     void SpawnEnemy()
     {
-        if (trackingEnemyPrefab == null || player == null)
-        {
-            ScheduleSpawn();
-            return;
-        }
+        if (trackingEnemyPrefab == null || player == null) return;
 
         Vector3 spawnPos = GetRandomPositionAroundPlayer();
         GameObject newEnemy = Instantiate(trackingEnemyPrefab, spawnPos, Quaternion.identity);
@@ -48,14 +52,8 @@ public class TrackingEnemySpawner : MonoBehaviour
         TrackingEnemy te = newEnemy.GetComponent<TrackingEnemy>();
         if (te != null)
         {
-            // 根据生成位置相对于玩家的前后设置追踪速度
-            if (spawnPos.x < player.position.x)
-                te.chaseSpeed = speedWhenBehind;
-            else
-                te.chaseSpeed = speedWhenAhead;
+            te.chaseSpeed = spawnPos.x < player.position.x ? speedWhenBehind : speedWhenAhead;
         }
-
-        ScheduleSpawn();
     }
 
     Vector3 GetRandomPositionAroundPlayer()

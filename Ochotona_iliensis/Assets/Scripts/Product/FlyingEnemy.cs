@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class FlyingEnemy : MonoBehaviour
 {
-    public float speed = 3f;          // 向左飞的速度
-    public int damage = 1;            // 碰撞造成的伤害
+    public float speed = 3f;
+    public int damage = 1;
+    public float screenOffset = 2f;   // 距离屏幕右边缘多少单位时激活（建议1.5~3）
 
-    // 距离激活相关
-    public float activationDistance = 8f;   // 距离玩家多远时激活（X轴距离）
     private bool isActivated = false;
-    private Transform player;
+    private bool isDead = false;
+    private Camera mainCamera;
 
     void Start()
     {
-        // 查找玩家
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
-        // 检查是否应该激活
+        // 屏幕边缘激活判定（未激活时）
         if (!isActivated)
         {
-            if (player == null) return;
-            // 当敌人位于玩家前方，且距离小于激活距离时，激活
-            if (transform.position.x - player.position.x < activationDistance)
+            if (mainCamera == null) return;
+            // 获取屏幕右边缘的世界坐标
+            float rightEdge = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+            // 如果敌人的x坐标小于（右边缘 + 偏移量），说明即将进入画面，激活
+            if (transform.position.x < rightEdge + screenOffset)
             {
                 isActivated = true;
             }
             else
             {
-                return; // 未激活，不执行移动逻辑
+                return; // 未激活，静止不动
             }
         }
 
-        // 激活后执行原有逻辑（向左移动 + 销毁）
+        // 激活后：向左移动 + 销毁
         transform.Translate(Vector2.left * speed * Time.deltaTime);
         if (transform.position.x < -15f)
             Destroy(gameObject);
@@ -44,6 +44,7 @@ public class FlyingEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
@@ -52,6 +53,11 @@ public class FlyingEnemy : MonoBehaviour
                 playerHealth.TakeDamage(damage);
             }
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 
     // s响应玩家大招的瞬间死亡接口
