@@ -6,6 +6,9 @@ public class TrackingEnemySpawner : MonoBehaviour
 {
     public GameObject trackingEnemyPrefab;
 
+    [Header("音效")]
+    public AudioClip appearSound; // 出场音效
+
     [Header("生成间隔")]
     public float minSpawnInterval = 5f;
     public float maxSpawnInterval = 10f;
@@ -48,6 +51,8 @@ public class TrackingEnemySpawner : MonoBehaviour
 
         Vector3 spawnPos = GetRandomPositionAroundPlayer();
         GameObject newEnemy = Instantiate(trackingEnemyPrefab, spawnPos, Quaternion.identity);
+  
+        SoundManager.Instance.PlaySFX(appearSound); // 播放音效
 
         TrackingEnemy te = newEnemy.GetComponent<TrackingEnemy>();
         if (te != null)

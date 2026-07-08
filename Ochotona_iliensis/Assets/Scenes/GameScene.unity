@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &109831614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109831616}
+  - component: {fileID: 109831615}
+  m_Layer: 0
+  m_Name: GlobalAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &109831615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109831614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38108a3e0adec81458828303a590a023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &109831616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109831614}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 156.1651, y: -1.7997159, z: -0.11067248}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &254935857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1676,6 +1720,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59478d56f7de3f469724c8608c8c886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSound: {fileID: 0}
+  dashSound: {fileID: 0}
+  resonanceSound: {fileID: 0}
   visualModel: {fileID: 1025752902}
   maxLeanAngle: 15
   leanSmoothing: 10
@@ -1745,6 +1792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb4252fe0a70e04895eaed4e06ab74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 0}
+  shieldSound: {fileID: 0}
   maxHealth: 3
   currentHealth: 0
   invincibleDuration: 5
@@ -1778,6 +1827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0641112a36b44b842b85ada97041eca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resonanceSound: {fileID: 0}
   maxEnergy: 100
   currentEnergy: 0
   energyGainPerSecond: 10
@@ -3529,3 +3579,4 @@ SceneRoots:
   - {fileID: 311744711}
   - {fileID: 1926104233}
   - {fileID: 1648575762}
+  - {fileID: 109831616}

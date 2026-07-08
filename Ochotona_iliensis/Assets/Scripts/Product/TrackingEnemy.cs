@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TrackingEnemy : MonoBehaviour
-{
+{    
     [Header("移动速度（由生成器设置）")]
     public float chaseSpeed = 3f;
 

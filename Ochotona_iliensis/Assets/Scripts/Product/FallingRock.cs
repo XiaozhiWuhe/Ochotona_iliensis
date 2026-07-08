@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FallingRock : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip fallSound;
+
     public float fallSpeed = 4f;      // 下落速度
     public int damage = 1;            // 碰撞伤害
     public float destroyY = -10f;     // 低于这个Y坐标就销毁（防止无限下落）
@@ -29,6 +32,7 @@ public class FallingRock : MonoBehaviour
             if (transform.position.x - player.position.x < activationDistance)
             {
                 isActivated = true;
+                SoundManager.Instance.PlaySFX(fallSound); // 播放音效
             }
             else
             {

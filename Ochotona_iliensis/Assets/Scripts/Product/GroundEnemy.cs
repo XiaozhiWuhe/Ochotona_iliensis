@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GroundEnemy : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip appearSound; // 出场音效
+
     public float speed = 2f;
     public int damage = 1;
     public float screenOffset = 2f;
@@ -34,6 +37,7 @@ public class GroundEnemy : MonoBehaviour
             if (transform.position.x < rightEdge + screenOffset)
             {
                 isActivated = true;
+                SoundManager.Instance.PlaySFX(appearSound); // 播放音效
             }
             else
             {

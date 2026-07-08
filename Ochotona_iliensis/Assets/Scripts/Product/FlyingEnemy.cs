@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FlyingEnemy : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip appearSound; // 出场音效
+
     public float speed = 3f;
     public int damage = 1;
     public float screenOffset = 2f;   // 距离屏幕右边缘多少单位时激活（建议1.5~3）
@@ -29,6 +32,7 @@ public class FlyingEnemy : MonoBehaviour
             if (transform.position.x < rightEdge + screenOffset)
             {
                 isActivated = true;
+                SoundManager.Instance.PlaySFX(appearSound); // 播放音效
             }
             else
             {

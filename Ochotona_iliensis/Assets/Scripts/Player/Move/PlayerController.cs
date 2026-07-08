@@ -3,6 +3,11 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
+    public AudioClip resonanceSound;
+
     [Header("外观与动感表现")]
     public Transform visualModel;           // 拖入专门放图片/动画的子物体，避免物理碰撞体跟着倾斜
     public float maxLeanAngle = 15f;        // 最大倾斜角度/度数
@@ -249,6 +254,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
+        SoundManager.Instance.PlaySFX(jumpSound);  // 播放跳跃音效
+
         coyoteTimeCounter = 0f;
         jumpBufferCounter = 0f;
     }
@@ -281,6 +288,7 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity = transform.right * dashSpeed;
+        SoundManager.Instance.PlaySFX(dashSound); // 播放冲刺音效
 
         // 开启生成残影的副协程
         Coroutine shadowCoroutine = StartCoroutine(GenerateDashShadows());

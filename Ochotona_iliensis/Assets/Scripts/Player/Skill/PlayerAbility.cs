@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip resonanceSound; // 共鸣技能音效 
+
     [Header("能量设置")]
     public float maxEnergy = 100f;          // 最大能量值
     public float currentEnergy = 0f;        // 当前能量值
@@ -54,6 +57,8 @@ public class PlayerAbility : MonoBehaviour
     void ExecuteCircleKill()
     {
         Debug.Log("释放范围消灭技能！");
+        SoundManager.Instance.PlaySFX(resonanceSound); // 技能生效时播放
+
 
         // 抓取圆圈范围内的所有敌人碰撞体
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, killRadius, enemyLayer);

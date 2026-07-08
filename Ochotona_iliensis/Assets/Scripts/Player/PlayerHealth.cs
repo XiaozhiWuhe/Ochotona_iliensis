@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("音效")]
+    public AudioClip hitSound;    // 受击
+    public AudioClip shieldSound; // 获得护盾
+
     [Header("生命值设置")]
     public int maxHealth = 3;      // 最大生命值
     public int currentHealth;      // 当前生命值
@@ -30,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     {
         hasShield = true;
         Debug.Log("获得护盾！");
+        SoundManager.Instance.PlaySFX(shieldSound); // 护盾音效
     }
 
     //普通伤害接口（会被冲刺、闪避、受伤无敌帧免疫）
@@ -40,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
         {
             hasShield = false;
             Debug.Log("护盾抵消伤害，护盾消失");
+            SoundManager.Instance.PlaySFX(shieldSound); // 护盾抵消音效
             return;
         }
 
@@ -48,6 +54,7 @@ public class PlayerHealth : MonoBehaviour
 
         // 3. 执行扣血
         ApplyCoreDamage(damage);
+        SoundManager.Instance.PlaySFX(hitSound); // 受击音效
 
         UpdateUI();
     }
@@ -63,12 +70,14 @@ public class PlayerHealth : MonoBehaviour
         {
             hasShield = false;
             Debug.Log("环境危机伤害被护盾抵消！");
+            SoundManager.Instance.PlaySFX(shieldSound); // 护盾抵消音效
             return;
         }
 
         // 绕过isInvincible判定，直接执行核心扣血
         Debug.Log("遭受环境真实伤害（无视无敌状态）！");
         ApplyCoreDamage(damage);
+        SoundManager.Instance.PlaySFX(hitSound); // 受击音效
     }
 
     //内部核心扣血与状态触发逻辑（私有函数，避免代码冗余）
